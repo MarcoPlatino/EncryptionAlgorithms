@@ -1,6 +1,6 @@
 # Simple encoding algorithm that uses ROT# (You can change it to be whatever you want...)
 
-def shift(text, shift):
+def encode(text, shift):
     listShift = list(text)
     encodedList = []
     for i in listShift:
@@ -14,7 +14,20 @@ def shift(text, shift):
         encodedList.append(chr((base) + (shift)))
     return "".join(encodedList)
 
-print(shift("hello", 13))
+# print(encode("hello", 13))
 
+def unencode(text, shift):
+    listShift = list(text)
+    encodedList = []
+    for i in listShift:
+        base = ord(i)
+        under = base - shift
+        if under < 97:
+            dif = 98 - (base + shift)
+            encodedList.append(chr(123 - abs(dif)))
+            # print(chr(122 - abs(dif)))
+            continue
+        encodedList.append(chr((base) - (shift)))
+    return "".join(encodedList)
 
         

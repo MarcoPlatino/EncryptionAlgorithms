@@ -1,3 +1,5 @@
+# Simple encoding algorithm that uses ROT# (You can change it to be whatever you want...)
+
 def shift(text, shift):
     listShift = list(text)
     encodedList = []

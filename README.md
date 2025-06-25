@@ -1,5 +1,13 @@
 # EncryptionAlgorithms
 
+This is a little tiny simple messaging app that can work over the local network
+Right now it only uses ROT# but that is ok for my purposes
+
+
+
+
+## OLD AND DEPRECATED
+----
 This is just some simple practice to help me do some more coding stuff.
 
 ##### These are some algorithms that I plan to make (Maybe):

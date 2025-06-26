@@ -14,6 +14,8 @@ def main():
             print("Connected to server successfully!")
             print("--------------------------------------------------")
             i = 0
+            client_id = "1"
+            s.send(client_id.encode())
             return s
             break
         except Exception as e:

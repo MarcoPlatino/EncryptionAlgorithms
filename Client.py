@@ -4,10 +4,9 @@ port = 12346
 host ='192.168.86.205'   
 i = 0
 p = " "
-s = 0
 def main():
+    i = 0
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((host, port))
     while True:
         try:
             s.connect(('192.168.86.205', port))
@@ -15,6 +14,7 @@ def main():
             print("Connected to server successfully!")
             print("--------------------------------------------------")
             i = 0
+            return s
             break
         except Exception as e:
             i += 1        
@@ -23,9 +23,8 @@ def main():
                  print("Failed to connect after 10 attempts. Exiting.")
                  break
             continue
-
+s = main()
 while True:
-    main()
     msg = input("What to send to the server: ")
     if msg == 'ni':
         break

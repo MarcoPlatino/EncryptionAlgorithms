@@ -5,20 +5,21 @@ import threading
 lock = threading.Lock()
 
 def handle_client(c, i):
+    client_id = c.recv(1024).decode().strip()
+    print(f'Client ID: {client_id}')
     while True:
         data = c.recv(1024)
         if not data:
-            print(f'disconnected...')
+            print(f'disconnected from client {client_id}')
             lock.release()
             break
         c.send(data[::-1])
         i += 1
-        print(f'connection: {i}')
+        print(f'request: {i}')
     c.close()
 
 s = socket.socket()
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-print("Socket successfully created")
 
 port = 12346
 
@@ -27,6 +28,7 @@ print("socket binded to %s" % (port))
 
 s.listen(5)
 print("socket is listening")
+print("----------------------------------------------")
 i = 0
 message = ""
 while message != "stop":

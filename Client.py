@@ -10,7 +10,7 @@ while p != "stop":
             s.connect(('192.168.86.205', port))
             i = 0
         except Exception as e:
-            i += 1
+            i += 1        
             print(f"Connection to server failed!?!  Attempt {i}. Retrying...")
             if i >= 10:
                  print("Failed to connect after 25 attempts. Exiting.")

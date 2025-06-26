@@ -4,15 +4,16 @@ import threading
 
 lock = threading.Lock()
 
-
+i = 0
 def handle_client(c):
     while True:
         data = c.recv(1024)
         if not data:
-            print('Bye')
+            print(f'connection: {i}')
             lock.release()
             break
         c.send(data[::-1])
+        i += 1
     c.close()
 
 s = socket.socket()

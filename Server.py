@@ -4,15 +4,16 @@ import threading
 
 lock = threading.Lock()
 
-
-def handle_client(c):
+def handle_client(c, i):
     while True:
         data = c.recv(1024)
         if not data:
-            print('Bye')
+            print(f'disconnected...')
             lock.release()
             break
         c.send(data[::-1])
+        i += 1
+        print(f'connection: {i}')
     c.close()
 
 s = socket.socket()
@@ -26,7 +27,7 @@ print("socket binded to %s" % (port))
 
 s.listen(5)
 print("socket is listening")
-
+i = 0
 message = ""
 while message != "stop":
     # while True:
@@ -41,6 +42,6 @@ while message != "stop":
         c, addr = s.accept()
         lock.acquire()
         print('Connected to:', addr[0], ':', addr[1])
-        start_new_thread(handle_client, (c,))
+        start_new_thread(handle_client, (c,i))
 
 s.close()

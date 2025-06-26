@@ -2,7 +2,6 @@ import socket
 from _thread import start_new_thread
 import threading
 
-lock = threading.Lock()
 
 def handle_client(c, i):
     client_id = c.recv(1024).decode().strip()
@@ -11,11 +10,10 @@ def handle_client(c, i):
         data = c.recv(1024)
         if not data:
             print(f'disconnected from client {client_id}')
-            lock.release()
             break
         c.send(data[::-1])
         i += 1
-        print(f'request: {i}')
+        print(f'request: {i} on client: {client_id}')
     c.close()
 
 s = socket.socket()
@@ -42,7 +40,6 @@ while message != "stop":
     #     break
     while True:
         c, addr = s.accept()
-        lock.acquire()
         print('Connected to:', addr[0], ':', addr[1])
         start_new_thread(handle_client, (c,i))
 

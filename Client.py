@@ -8,6 +8,9 @@ while p != "stop":
         s = socket.socket()
         try:
             s.connect(('192.168.86.205', port))
+            print("--------------------------------------------------")
+            print("Connected to server successfully!")
+            print("--------------------------------------------------")
             i = 0
         except Exception as e:
             i += 1        
@@ -17,6 +20,7 @@ while p != "stop":
                  break
             continue
         message = (s.recv(1024).decode())
+        s.send('[GOT THE MESSAGE SUCESSFULLY]'.encode())
         print(f'Recieved From Server: {message}')
         s.send(input("Reply: ").encode())
         s.close()

@@ -12,7 +12,7 @@ def handle_client(c, i, addr):
     print(f'Client ID: {client_id}')
     lock.acquire()
     clients[client_id] = c
-    print(clients)
+    # print(clients)
     lock.release()
     try:
         while True:
@@ -20,7 +20,8 @@ def handle_client(c, i, addr):
             message = message.decode()
             recipient = message[0]
             clients[recipient].send(message[1:].encode())
-            if clients[recipient].recv(1024) == "yes":
+            confirm = clients[recipient].recv(1024)
+            if confirm == 'yes':
                 c.send('message sent'.encode())
     finally:
         lock.acquire()

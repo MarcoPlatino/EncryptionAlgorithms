@@ -26,8 +26,8 @@ def main():
                  break
             continue
 s = main()
+msg = ''
 while True:
-    msg = input("What to send to the server: ")
     if msg == 'ni':
         break
     s.send(msg.encode())

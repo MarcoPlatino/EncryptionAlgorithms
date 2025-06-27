@@ -20,7 +20,8 @@ def handle_client(c, i, addr):
             message = message.decode()
             recipient = message[0]
             clients[recipient].send(message[1:].encode())
-            c.send()
+            if clients[recipient].recv(1024) == "yes":
+                c.send('message sent'.encode())
     finally:
         lock.acquire()
         if client_id in clients:

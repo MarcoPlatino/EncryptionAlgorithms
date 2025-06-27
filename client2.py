@@ -30,7 +30,6 @@ msg = ''
 while True:
     if msg == 'ni':
         break
-    s.send(msg.encode())
     data = s.recv(1024)
     print(f'Recieved: {data.decode()}')
     s.send('yes'.encode())

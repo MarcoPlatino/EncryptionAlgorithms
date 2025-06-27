@@ -18,8 +18,9 @@ def handle_client(c, i, addr):
         while True:
             message = c.recv(1024)
             message = message.decode()
-            recipient = message[:1]
-            clients[recipient].send(message.encode())
+            recipient = message[0]
+            clients[recipient].send(message[1:].encode())
+            c.send()
     finally:
         lock.acquire()
         if client_id in clients:

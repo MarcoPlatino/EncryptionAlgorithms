@@ -16,13 +16,21 @@ def handle_client(c, i, addr):
     lock.release()
     try:
         while True:
-            message = c.recv(1024)
-            message = message.decode()
-            recipient = message[0]
-            clients[recipient].send(message[1:].encode())
-            confirm = clients[recipient].recv(1024)
-            if confirm == 'yes':
-                c.send('message sent'.encode())
+            try:
+                message = c.recv(1024)
+                message = message.decode()
+                if not message or message == 'yes':
+                    continue
+                recipient = message[0]
+                clients[recipient].send(message[1:].encode())
+                confirm = clients[recipient].recv(1024)
+                if confirm == b'yes' or confirm == 'yes':
+                    c.send('message sent'.encode())
+                else:
+                    c.send('unable to confirm message'.encode())
+            except:
+                print('Client Error....')
+                c.send("No forwarding adress....".encode())
     finally:
         lock.acquire()
         if client_id in clients:

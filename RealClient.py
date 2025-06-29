@@ -6,7 +6,7 @@ output = queue.Queue()
 
 def sendMessage(s):
     while True:
-        msg = input("What to send to the server: ")
+        msg = input("")
         if msg == 'ni':
             break
         s.send(msg.encode())
@@ -18,7 +18,7 @@ def recieveMessage(s):
             data = s.recv(1024)
             if not data:
                 break
-            print(f"Recieved: {data.decode()}")
+            print(f"\nRecieved: {data.decode()}")
             s.send(b'yes')
         except:
             break
@@ -33,16 +33,18 @@ def main():
             print("--------------------------------------------------")
             print("Connected to server successfully!")
             print("--------------------------------------------------")
-            i = 0
             client_id = "1"
             s.send(client_id.encode())
-            return s
+            break  # Exit the loop after successful connection
         except Exception as e:
-            i += 1        
-            print(f"Connection to server failed!?!  Attempt {i}. Retrying...")
-            if i == 10:
+            print(f"Connection to server failed!?!  Attempt {i+1}. Retrying...")
+            if i == 9:
                 print("Failed to connect after 10 attempts. Exiting.")
                 return
-        threading.Thread(target=sendMessage, args=(s,), daemon=True).start()
-        recieveMessage()
+    else:
+        # If we never break, connection failed
+        return
+    threading.Thread(target=sendMessage, args=(s,), daemon=True).start()
+    recieveMessage(s)
+main()
 

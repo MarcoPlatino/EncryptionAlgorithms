@@ -23,6 +23,7 @@ def handle_client(c, i, addr):
                     continue
                 recipient = message[0]
                 clients[recipient].send(message[1:].encode())
+                # print(f'sent {message} from {clients[c]} to {clients[recipient]}')
                 confirm = clients[recipient].recv(1024)
                 if confirm == b'yes' or confirm == 'yes':
                     c.send('message sent'.encode())
